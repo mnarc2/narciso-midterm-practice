@@ -1,0 +1,188 @@
+---
+title: "EAES 380 Practice Midterm Instructions"
+output: 
+  tufte::tufte_html:
+    css: exam.css
+    tufte_variant: "envisioned"
+    highlight: pygments
+link-citations: yes
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(eval = FALSE)
+```
+
+# Academic integrity and honor code
+
+This practice midterm is designed to help you prepare for the exam. **Generative AI tools are not permitted.** This includes ChatGPT, Claude, Gemini, Copilot, Grok, and similar tools that can generate or revise code, written answers, or exam content.
+
+By completing and submitting this practice midterm, I certify that:
+
+- I completed the submitted work myself.
+- I did not use generative AI to generate, debug, revise, or interpret code or written answers for this assignment.
+- I may use course materials, lecture notes, R documentation/help files, and other resources explicitly approved by the instructors.
+- I understand that I am responsible for being able to explain all code and written work that I submit.
+
+**Name:** ______________________________  
+**Signature:** ___________________________  
+**Date:** _______________________________
+
+> **Important:** Signing this statement is part of the practice. The same statement appears in your starter file; complete it there as well.
+
+# Practice midterm overview
+
+You will inspect, wrangle, and visualize the `earthquakes` data from the `{openintro}` package.
+
+## Learning goals
+
+By the end of this practice midterm, you should be able to:  
+
+  A. Inspect a data frame and describe its size and variable types.  
+  B. Count observations by group and visualize the top groups.  
+  C. Filter missing values and report how many rows were removed.  
+  D. Re-level a factor so a plot uses calendar month order.  
+
+## Deliverable
+
+Complete **`practice-midterm-starter.Rmd`**. Your finished starter file should contain your code and written responses and should Knit successfully from top to bottom.
+
+## Before asking for help
+
+First check spelling, parentheses, quotation marks, and package loading. If you are still stuck, ask Dr. Gavin McNicol or TA Kayode Ayegbusi and show them the code and error message.
+
+# Getting started
+
+If you are reading a knitted copy of these instructions, treat the steps below as review.
+
+- Open the GitHub repository you want to copy and add `/generate` to the URL.
+- Under **Owner**, choose `EAES-380`. Do not choose your personal account.
+- Name the repository `practice-midterm-yourlastname` and keep it **Private**.
+- Clone it into a New Project from a GitHub Repo in [RStudio Cloud](https://rstudio.cloud).
+- Open `practice-midterm-instructions.Rmd` and Knit it.
+- Open `practice-midterm-starter.Rmd`. **This is the file you will complete.**
+
+# Warm-up: R Markdown + Git
+
+Open `practice-midterm-starter.Rmd`.
+
+A. Replace the author and date in the YAML with your name and today's date.
+B. Complete and sign the honor-code statement.
+C. Knit, then commit with a message such as `Update author and honor code` and push to GitHub.
+
+# Packages and data
+
+```{r load-packages-demo, message = FALSE}
+library(tidyverse)
+library(openintro)
+```
+
+# Exercises
+
+## Exercise 1 — Glimpse and describe (5 points)
+
+**Goal:** Inspect the size and variable types of `earthquakes`.
+
+Under Exercise 1 in your starter file, write and label a code chunk that uses `glimpse()` to inspect the `earthquakes` dataset. After the chunk, state:
+
+- how many rows and variables are in the dataset
+- of the variables, how many are categorical and how many are numerical
+
+## Exercise 2 — Variable names (5 points)
+
+**Goal:** Check that column names follow good R style.
+
+Under Exercise 2, write and label a code chunk that uses `names()` to inspect the variable names in `earthquakes`. After the chunk, state two stylistic choices for these variable names that mean they accord with good R syntax.
+
+## Exercise 3 — Count by region (5 points)
+
+**Goal:** Produce a sorted frequency table.
+
+Under Exercise 3, write and label a code chunk that uses `count()` to output the number of observations for each `region`. The output should be arranged in descending order by the number (`n`) of observations. After the chunk, state the pair of data-wrangling functions we could have used instead to generate a similar output.
+
+## Exercise 4 — Bar plot of top 5 regions (5 points)
+
+**Goal:** Filter to the five most frequent regions and draw a bar chart.
+
+Under Exercise 4, copy and complete the code chunk below. It should filter to the five regions with the most earthquakes (from Exercise 3) and generate a bar plot where each bar is a `region`.
+
+```{r visualize-earthquake-regions, eval = FALSE}
+___ %>% 
+  filter(___ %in% c("___", "___", "___", "___", "___")) %>% 
+  ggplot(aes(x = ___)) +
+  geom_bar() +
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+```
+
+## Exercise 5 — Faceted histograms of richter (5 points)
+
+**Goal:** Compare magnitude distributions across the top five regions.
+
+Under Exercise 5, copy and complete the code chunk below so that it generates histograms of `richter`, faceted by the top five regions, with fill also mapped to `region`. Under the completed chunk, state whether you think the center (average) of `richter` depends on region or not, and why. You may need to expand the figure to see the results.
+
+```{r visualize-earthquake-richter, eval = FALSE}
+___ %>% 
+  filter(___ %in% c("___", "___", "___", "___", "___")) %>% 
+  ggplot(aes(x = ___, fill = ___)) +
+  geom_histogram() +
+  facet_wrap(~ ___, ncol = 3) +
+  theme_classic()
+```
+
+## Exercise 6 — Select, drop NAs, and count removed rows (10 points)
+
+**Goal:** Build a complete-case subset and report how many rows were lost.
+
+Under Exercise 6, write and label a code chunk that takes `earthquakes` as input and uses a pipeline to:
+
+- **select** `richter`, `year`, `month`, and `deaths`
+- **filter** for non-NA values in each variable (using `!is.na(variable_name)`)
+- **assign** the output to a new object called `earthquakes_subset`
+
+Under the chunk, state how many rows were removed from `earthquakes` by removing NAs.
+
+## Exercise 7 — Re-level month and redraw the violin plot (5 points)
+
+**Goal:** Explain alphabetical factor order and correct it.
+
+The following chunk (also in the starter) draws a violin plot of deaths by month from `earthquakes_subset`.
+
+```{r visualize-earthquakes-deaths, eval = FALSE}
+earthquakes_subset %>% 
+  ggplot(aes(x = month, y = deaths)) +
+  geom_violin() +
+  theme_classic()
+```
+
+Under Exercise 7, state why `April` appears on the left instead of `January`. In your response, make reference to the data type/class of the `month` variable and the two components that make up that data class. Then copy and complete the chunk below so that it outputs a violin plot with `January` on the left and the natural ordering of months.
+
+```{r recode-month-levels, eval = FALSE}
+earthquakes_subset %>% 
+  mutate(___ = fct_relevel(___,
+                           "___",
+                           "___",
+                           "___",
+                           "___",
+                           "___",
+                           "___",
+                           "___",
+                           "___",
+                           "___",
+                           "___",
+                           "___",
+                           "___")) %>% 
+  ggplot(aes(x = month, y = deaths)) +
+  geom_violin() +
+  theme_classic()
+```
+
+🧶 ✅ ⬆️ Knit, commit, and push your final changes to GitHub with an appropriate commit message.
+
+# Submission checklist
+
+- [ ] I signed the academic-integrity statement in both files.
+- [ ] My name and date are correct in the starter YAML.
+- [ ] I answered every requested question in complete sentences.
+- [ ] All required code is in `practice-midterm-starter.Rmd`.
+- [ ] The document Knits from top to bottom without errors.
+- [ ] I committed and pushed the final version to GitHub.

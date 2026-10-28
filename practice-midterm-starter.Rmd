@@ -1,0 +1,147 @@
+---
+title: "EAES 380 Practice Midterm"
+author: "Insert your name here"
+date: "Insert date here"
+output:
+  html_document:
+    toc: true
+    toc_depth: 2
+---
+
+# Academic integrity and honor code
+
+By completing and submitting this practice midterm, I certify that:
+
+- I completed the submitted work myself.
+- I did not use generative AI (including ChatGPT, Claude, Gemini, Copilot, Grok, or similar tools) to generate, debug, revise, or interpret code or written answers for this assignment.
+- I may use course materials, lecture notes, R documentation/help files, and other resources explicitly approved by the instructors.
+- I understand that I am responsible for being able to explain all code and written work that I submit.
+
+**Name:** ______________________________  
+**Signature:** ___________________________  
+**Date:** _______________________________
+
+# Before you begin
+
+Work through the exercises using `practice-midterm-instructions.Rmd` as your guide. Keep **all submitted code in this file** and Knit frequently.
+
+Ask Dr. Gavin McNicol or TA Kayode Ayegbusi if you are still stuck after checking spelling, parentheses, and Knit errors.
+
+# Load packages
+
+```{r load-packages, eval = FALSE, message = FALSE, warning = FALSE}
+library(tidyverse)
+library(openintro)
+```
+
+# Exercises
+
+## Exercise 1 — Glimpse and describe (5 points)
+
+**Goal:** Inspect the size and variable types of `earthquakes`.
+
+```{r glimpse-earthquakes, eval = FALSE}
+# Your code here
+```
+
+> Replace this text with the number of rows and variables, and how many are categorical versus numerical.
+
+## Exercise 2 — Variable names (5 points)
+
+**Goal:** Check that column names follow good R style.
+
+```{r names-earthquakes, eval = FALSE}
+# Your code here
+```
+
+> Replace this text with two stylistic choices that mean these names accord with good R syntax.
+
+## Exercise 3 — Count by region (5 points)
+
+**Goal:** Produce a sorted frequency table.
+
+```{r count-region, eval = FALSE}
+# Your code here
+```
+
+> Replace this text with the pair of data-wrangling functions that could produce a similar output.
+
+## Exercise 4 — Bar plot of top 5 regions (5 points)
+
+**Goal:** Filter to the five most frequent regions and draw a bar chart.
+
+```{r visualize-earthquake-regions, eval = FALSE}
+___ %>% 
+  filter(___ %in% c("___", "___", "___", "___", "___")) %>% 
+  ggplot(aes(x = ___)) +
+  geom_bar() +
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+```
+
+## Exercise 5 — Faceted histograms of richter (5 points)
+
+**Goal:** Compare magnitude distributions across the top five regions.
+
+```{r visualize-earthquake-richter, eval = FALSE}
+___ %>% 
+  filter(___ %in% c("___", "___", "___", "___", "___")) %>% 
+  ggplot(aes(x = ___, fill = ___)) +
+  geom_histogram() +
+  facet_wrap(~ ___, ncol = 3) +
+  theme_classic()
+```
+
+> Replace this text with whether the center of `richter` depends on region, and why.
+
+## Exercise 6 — Select, drop NAs, and count removed rows (10 points)
+
+**Goal:** Build a complete-case subset and report how many rows were lost.
+
+```{r earthquakes-subset, eval = FALSE}
+# Your code here
+```
+
+> Replace this text with how many rows were removed by dropping NAs.
+
+## Exercise 7 — Re-level month and redraw the violin plot (5 points)
+
+**Goal:** Explain alphabetical factor order and correct it.
+
+```{r visualize-earthquakes-deaths, eval = FALSE}
+earthquakes_subset %>% 
+  ggplot(aes(x = month, y = deaths)) +
+  geom_violin() +
+  theme_classic()
+```
+
+> Replace this text with why `April` appears on the left instead of `January`, referencing the type/class of `month` and its two components.
+
+```{r recode-month-levels, eval = FALSE}
+earthquakes_subset %>% 
+  mutate(___ = fct_relevel(___,
+                           "___",
+                           "___",
+                           "___",
+                           "___",
+                           "___",
+                           "___",
+                           "___",
+                           "___",
+                           "___",
+                           "___",
+                           "___",
+                           "___")) %>% 
+  ggplot(aes(x = month, y = deaths)) +
+  geom_violin() +
+  theme_classic()
+```
+
+# Submission checklist
+
+- [ ] I signed the academic-integrity statement.
+- [ ] My name and date are correct in the YAML.
+- [ ] I answered every requested question in complete sentences.
+- [ ] All required code is in this file.
+- [ ] This document Knits without errors.
+- [ ] I committed and pushed my final changes to GitHub.
